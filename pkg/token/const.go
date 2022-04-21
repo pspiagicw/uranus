@@ -7,9 +7,9 @@ const (
 	IDENT = "IDENT"
 	INT   = "INT"
 
-	ASSIGN = "ASSIGN"
-	PLUS = "+"
-	COMMA = ","
+	ASSIGN    = "ASSIGN"
+	PLUS      = "+"
+	COMMA     = ","
 	SEMICOLON = ";"
 
 	LPAREN = "("
@@ -18,5 +18,21 @@ const (
 	RBRACE = "}"
 
 	FUNCTION = "FUNCTION"
-	LET = "LET"
+	LET      = "LET"
+
+	BANG     = "!"
+	DIVIDE   = "/"
+	MULTIPLY = "*"
+	LT       = "<"
+	GT       = ">"
+	MINUS    = "-"
+
+	RETURN = "RETURN"
+	FALSE  = "FALSE"
+	TRUE   = "TRUE"
+	ELSE   = "ELSE"
+	IF     = "IF"
+
+	EQ = "EQ"
+	NEQ = "NEQ"
 )
