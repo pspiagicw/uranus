@@ -24,18 +24,27 @@ func TestNewToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-
 	l := New(input)
 
-	for i , tt := range tests {
+	for i, tt := range tests {
 		tok := l.NextToken()
 
 		if tok.Type != tt.expectedType {
-			t.Errorf("[%d] TokenType mismatched! %v does not match with %v" , i ,  tok.Type , tt.expectedType)
-			
+			t.Errorf(
+				"[%d] TokenType mismatched! %v does not match with %v",
+				i,
+				tok.Type,
+				tt.expectedType,
+			)
+
 		}
 		if tok.Literal != tt.expectedLiteral {
-			t.Errorf("[%d] Token Literal mismatched! %v does not match with %v" , i , tok.Literal , tt.expectedLiteral)
+			t.Errorf(
+				"[%d] Token Literal mismatched! %v does not match with %v",
+				i,
+				tok.Literal,
+				tt.expectedLiteral,
+			)
 		}
 	}
 
@@ -58,7 +67,7 @@ return false;
 10 != 9;
 `
 	tests := []struct {
-		expectedType token.TokenType
+		expectedType    token.TokenType
 		expectedLiteral string
 	}{
 		{token.LET, "let"},
@@ -97,58 +106,67 @@ return false;
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
-		{token.BANG , "!"},
-		{token.MINUS , "-"},
-		{token.DIVIDE , "/"},
-		{token.MULTIPLY , "*"},
-		{token.INT , "5"},
-		{token.SEMICOLON , ";"},
-		{token.INT , "5"},
-		{token.LT , "<"},
-		{token.INT , "10"},
-		{token.GT , ">"},
-		{token.INT , "5"},
-		{token.SEMICOLON , ";"},
-		{token.IF , "if"},
-		{token.LPAREN , "("},
-		{token.INT , "5"},
-		{token.GT , ">"},
+		{token.BANG, "!"},
+		{token.MINUS, "-"},
+		{token.DIVIDE, "/"},
+		{token.MULTIPLY, "*"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		{token.INT, "5"},
+		{token.LT, "<"},
 		{token.INT, "10"},
-		{token.RPAREN , ")"},
-		{token.LBRACE , "{"} ,
-		{token.RETURN , "return"},
-		{token.TRUE , "true"},
-		{token.SEMICOLON , ";"},
-		{token.RBRACE , "}"},
-		{token.ELSE , "else"},
-		{token.LBRACE , "{"},
-		{token.RETURN , "return"},
-		{token.FALSE , "false"},
-		{token.SEMICOLON , ";"},
-		{token.RBRACE , "}"},
-		{token.INT , "10"},
-		{token.EQ , "=="},
-		{token.INT , "10"},
-		{token.SEMICOLON , ";"},
-		{token.INT , "10"},
-		{token.NEQ , "!="},
-		{token.INT , "9"},
-		{token.SEMICOLON , ";"},
+		{token.GT, ">"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		{token.IF, "if"},
+		{token.LPAREN, "("},
+		{token.INT, "5"},
+		{token.GT, ">"},
+		{token.INT, "10"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.TRUE, "true"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.ELSE, "else"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.FALSE, "false"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.INT, "10"},
+		{token.EQ, "=="},
+		{token.INT, "10"},
+		{token.SEMICOLON, ";"},
+		{token.INT, "10"},
+		{token.NEQ, "!="},
+		{token.INT, "9"},
+		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
-		
 	}
 
 	l := New(input)
 
-	for i , tt := range tests {
+	for i, tt := range tests {
 		tok := l.NextToken()
 
 		if tok.Type != tt.expectedType {
-			t.Errorf("[%d] TokenType mismatched! '%v' does not match with '%v'" , i ,  tok.Type , tt.expectedType)
-			
+			t.Errorf(
+				"[%d] TokenType mismatched! '%v' does not match with '%v'",
+				i,
+				tok.Type,
+				tt.expectedType,
+			)
+
 		}
 		if tok.Literal != tt.expectedLiteral {
-			t.Errorf("[%d] Token Literal mismatched! '%v' does not match with '%v'" , i , tok.Literal , tt.expectedLiteral)
+			t.Errorf(
+				"[%d] Token Literal mismatched! '%v' does not match with '%v'",
+				i,
+				tok.Literal,
+				tt.expectedLiteral,
+			)
 		}
 	}
 }
