@@ -33,6 +33,6 @@ const (
 	ELSE   = "ELSE"
 	IF     = "IF"
 
-	EQ = "EQ"
+	EQ  = "EQ"
 	NEQ = "NEQ"
 )

@@ -1,0 +1,106 @@
+
+pkg/ast/ast.go,778
+package astast1,0
+type Node interface {Node6,62
+type Statement interface {Statement11,111
+type Expression interface {Expression17,165
+type Program struct {Program22,220
+func (p *Program) TokenLiteral() string {TokenLiteral27,270
+type LetStatement struct {LetStatement36,409
+type Identifier struct {Identifier42,494
+func (l *LetStatement) statementNode() {}statementNode48,556
+func (l *LetStatement) TokenLiteral() string {TokenLiteral50,599
+func (i *Identifier) expressionNode() {}expressionNode55,674
+func (i *Identifier) TokenLiteral() string {TokenLiteral56,715
+type ReturnStatement struct {ReturnStatement62,789
+func (r *ReturnStatement) statementNode() {}statementNode67,859
+func (r *ReturnStatement) TokenLiteral() string {TokenLiteral68,904
+
+pkg/repl/repl.go,113
+package replrepl1,0
+const PROMPT = ">>>"PROMPT13,132
+func Start(in io.Reader , out io.Writer) {Start16,155
+
+pkg/lexer/lexer.go,614
+package lexerlexer1,0
+type Lexer struct {Lexer5,63
+func New(input string) *Lexer {New12,162
+func (l *Lexer) readChar() {readChar18,248
+func (l *Lexer) eatWhiteSpace() {eatWhiteSpace27,423
+func (l *Lexer) NextToken() token.Token {NextToken33,545
+func (l *Lexer) readNumber() string {readNumber100,1968
+func isDigit(ch byte) bool {isDigit108,2109
+func (l *Lexer) readIdentifier() string {readIdentifier111,2171
+func isLetter(ch byte) bool {isLetter118,2316
+func newToken(tokenType token.TokenType, literal byte) token.Token {newToken121,2418
+func (l *Lexer) peekChar() byte {peekChar125,2553
+
+pkg/lexer/lexer_test.go,138
+package lexerlexer1,0
+func TestNewToken(t *testing.T) {TestNewToken9,80
+func TestComplexLexer(t *testing.T) {TestComplexLexer43,806
+
+pkg/parser/parser_test.go,332
+package parserparser1,0
+func TestLetStatement(t *testing.T) {TestLetStatement10,120
+func checkParserErrors(t *testing.T, p *Parser) {checkParserErrors48,746
+func testLetStatement(t *testing.T, stmt ast.Statement, name string) bool {testLetStatement63,999
+func TestReturnStatement(t *testing.T) {TestReturnStatement89,1616
+
+pkg/parser/parser.go,799
+package parserparser1,0
+type Parser struct {Parser11,157
+func New(l *lexer.Lexer) *Parser {New20,262
+func (p *Parser) Errors() []string {Errors32,395
+func (p *Parser) peekError(t token.TokenType) {peekError35,451
+func (p *Parser) nextToken() {nextToken41,629
+func (p *Parser) ParseProgram() *ast.Program {ParseProgram46,720
+func (p *Parser) parseStatement() ast.Statement {parseStatement62,1020
+func (p *Parser) parseReturnStatement() ast.Statement {parseReturnStatement73,1227
+func (p *Parser) parseLetStatement() ast.Statement {parseLetStatement84,1410
+func (p *Parser) peekTokenIs(t token.TokenType) bool {peekTokenIs103,1760
+func (p *Parser) curTokenIs(t token.TokenType) bool {curTokenIs109,1876
+func (p *Parser) expectPeek(t token.TokenType) bool {expectPeek116,1991
+
+pkg/token/const.go,807
+package tokentoken1,0
+	ILLEGAL = "ILLEGAL"ILLEGAL4,23
+	EOF     = "EOF"EOF5,44
+	IDENT = "IDENT"IDENT7,62
+	INT   = "INT"INT8,79
+	ASSIGN    = "ASSIGN"ASSIGN10,95
+	PLUS      = "+"PLUS11,117
+	COMMA     = ","COMMA12,134
+	SEMICOLON = ";"SEMICOLON13,151
+	LPAREN = "("LPAREN15,169
+	RPAREN = ")"RPAREN16,183
+	LBRACE = "{"LBRACE17,197
+	RBRACE = "}"RBRACE18,211
+	FUNCTION = "FUNCTION"FUNCTION20,226
+	LET      = "LET"LET21,249
+	BANG     = "!"BANG23,268
+	DIVIDE   = "/"DIVIDE24,284
+	MULTIPLY = "*"MULTIPLY25,300
+	LT       = "<"LT26,316
+	GT       = ">"GT27,332
+	MINUS    = "-"MINUS28,348
+	RETURN = "RETURN"RETURN30,365
+	FALSE  = "FALSE"FALSE31,384
+	TRUE   = "TRUE"TRUE32,402
+	ELSE   = "ELSE"ELSE33,419
+	IF     = "IF"IF34,436
+	EQ = "EQ"EQ36,452
+	NEQ = "NEQ"NEQ37,463
+
+pkg/token/token.go,208
+package tokentoken1,0
+type TokenType stringTokenType4,50
+type Token struct {Token7,110
+var keywords = map[string]TokenType{keywords12,168
+func LookUpIdent(ident string) TokenType {LookUpIdent24,319
+
+Makefile,0
+
+cmd/uranus/main.go,47
+package mainmain1,0
+func main() {main11,91

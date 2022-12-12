@@ -28,6 +28,7 @@ func TestCallExpressions(t *testing.T) {
 	if len(exp.Arguments) != 3 {
 		t.Fatalf("wrong length of arguments. got=%d", len(exp.Arguments))
 	}
+
 	assertLiteralExpression(t, exp.Arguments[0], 1)
 	assertInfixExpression(t, exp.Arguments[1], 2, "*", 3)
 	assertInfixExpression(t, exp.Arguments[2], 4, "+", 5)
@@ -138,6 +139,7 @@ func TestIfExpressions(t *testing.T) {
 		}
 
 		exp, ok := stmt.Expression.(*ast.IfExpression)
+
 		if !ok {
 			t.Fatalf("Expression Statement does not contain if expression , got=%T", stmt)
 		}
