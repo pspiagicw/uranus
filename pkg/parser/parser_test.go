@@ -8,6 +8,20 @@ import (
 	"github.com/pspiagicw/uranus/pkg/lexer"
 )
 
+func TestStringLitearlExpressions(t *testing.T) {
+	input := `"hello world"`
+	program := newProgram(t, input)
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	literal, ok := stmt.Expression.(*ast.StringLiteral)
+	if !ok {
+		t.Fatalf("exp not *ast.StringLiteral. Got %T", stmt.Expression)
+	}
+
+	if literal.Value != "hello world" {
+		t.Errorf("literal.Value not %q, got=%q", "hello world", literal.Value)
+	}
+}
 func TestCallExpressions(t *testing.T) {
 	input := `add(1 , 2 * 3, 4 + 5);`
 	program := newProgram(t, input)
@@ -345,7 +359,7 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 	}
 }
 
-/// === INFIX Expressions ===
+// / === INFIX Expressions ===
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
 		input      string
@@ -380,7 +394,7 @@ func TestParsingInfixExpressions(t *testing.T) {
 	}
 }
 
-/// === PREFIX Expressinos ===
+// / === PREFIX Expressinos ===
 func TestParsingPrefixExpressions(t *testing.T) {
 	prefixTests := []struct {
 		input        string
@@ -536,7 +550,7 @@ func TestInvalidLetStatements(t *testing.T) {
 	assertParserErrors(t, p)
 }
 
-/// === Testing Utilities ===
+// / === Testing Utilities ===
 func assertParserErrors(t testing.TB, p *Parser) {
 	t.Helper()
 

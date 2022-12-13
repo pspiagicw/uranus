@@ -35,4 +35,6 @@ const (
 
 	EQ  = "EQ"
 	NEQ = "NEQ"
+
+	STRING = "STRING"
 )

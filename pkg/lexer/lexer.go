@@ -29,6 +29,18 @@ func (l *Lexer) eatWhiteSpace() {
 		l.readChar()
 	}
 }
+func (l *Lexer) readString() string {
+	position := l.position + 1
+	for {
+		l.readChar()
+
+		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+
+	return l.input[position:l.position]
+}
 
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
@@ -45,6 +57,9 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.ASSIGN, l.ch)
 
 		}
+	case '"':
+		tok.Type = token.STRING
+		tok.Literal = l.readString()
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
 	case '{':

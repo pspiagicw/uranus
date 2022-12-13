@@ -8,8 +8,39 @@ import (
 	"github.com/pspiagicw/uranus/pkg/parser"
 )
 
+func TestConcatenation(t *testing.T) {
+	input := `"hello " + "world"`
+
+	evaluated := testEval(input)
+
+	str, ok := evaluated.(*object.String)
+
+	if !ok {
+		t.Fatalf("object is not string, got=%T , (%+v)", evaluated, evaluated)
+	}
+
+	if str.Value != "hello world" {
+		t.Errorf("value of string wrong, got=%q", str.Value)
+	}
+}
+
+func TestStringLiteral(t *testing.T) {
+	input := `"Hello World"`
+
+	evaluated := testEval(input)
+
+	str, ok := evaluated.(*object.String)
+
+	if !ok {
+		t.Fatalf("object is not String. got=%T , (+%v)", evaluated, evaluated)
+	}
+
+	if str.Value != "Hello World" {
+		t.Errorf("String has wrong value, got=%q", str.Value)
+	}
+}
 func TestClosures(t *testing.T) {
-    input := `
+	input := `
     let newAdder = fn(x) {
         fn(y) { x + y };
     };
@@ -19,54 +50,51 @@ func TestClosures(t *testing.T) {
     addTwo(2);
     `
 
-    testIntegerObject(t , testEval(input) , 4)
+	testIntegerObject(t, testEval(input), 4)
 }
 func TestFunctionApplication(t *testing.T) {
-    tests := []struct {
-        input string
-        expected int64
-    }{
-        {"let identity = fn(x) { x; }; identity(5);", 5},
-        {"let identity = fn(x) { return x;}; identity(5)", 5},
-        {"let double = fn(x) { x * 2;}; double(2)", 4},
-        {"let add = fn(x,y) { x + y;}; add(1,4)", 5},
-        {"let add = fn(x,y) { x + y;}; add(5+5,add(5,5))", 20},
-        {"fn(x) { x; }(5)", 5},
-    }
+	tests := []struct {
+		input    string
+		expected int64
+	}{
+		{"let identity = fn(x) { x; }; identity(5);", 5},
+		{"let identity = fn(x) { return x;}; identity(5)", 5},
+		{"let double = fn(x) { x * 2;}; double(2)", 4},
+		{"let add = fn(x,y) { x + y;}; add(1,4)", 5},
+		{"let add = fn(x,y) { x + y;}; add(5+5,add(5,5))", 20},
+		{"fn(x) { x; }(5)", 5},
+	}
 
-    for _ , tt := range tests {
-        testIntegerObject(t, testEval(tt.input) , tt.expected)
-    }
+	for _, tt := range tests {
+		testIntegerObject(t, testEval(tt.input), tt.expected)
+	}
 
 }
 
 func TestFunctionObject(t *testing.T) {
-    input := "fn(x) { x + 2; };"
+	input := "fn(x) { x + 2; };"
 
-    evaluated := testEval(input)
+	evaluated := testEval(input)
 
-    fn , ok := evaluated.(*object.Function)
+	fn, ok := evaluated.(*object.Function)
 
-    if !ok {
-        t.Fatalf("object is not function, got=%T (%+v)", evaluated, evaluated)
-    }
+	if !ok {
+		t.Fatalf("object is not function, got=%T (%+v)", evaluated, evaluated)
+	}
 
-    if len(fn.Parameters) != 1 {
-        t.Fatalf("Function has wrong number of paramaeter, got=%+v", fn.Parameters)
-    }
+	if len(fn.Parameters) != 1 {
+		t.Fatalf("Function has wrong number of paramaeter, got=%+v", fn.Parameters)
+	}
 
-    if fn.Parameters[0].String() != "x" {
-        t.Fatalf("parameter is not 'x', got=%q", fn.Parameters[0])
-    }
+	if fn.Parameters[0].String() != "x" {
+		t.Fatalf("parameter is not 'x', got=%q", fn.Parameters[0])
+	}
 
-    expectedBody := `(x + 2)`
+	expectedBody := `(x + 2)`
 
-    if fn.Body.String() != expectedBody {
-        t.Fatalf("Body is not equal %q, got=%q", expectedBody, fn.Body.String())
-    }
-
-
-
+	if fn.Body.String() != expectedBody {
+		t.Fatalf("Body is not equal %q, got=%q", expectedBody, fn.Body.String())
+	}
 
 }
 func TestLetStatements(t *testing.T) {
@@ -90,6 +118,9 @@ func TestErrorHandling(t *testing.T) {
 		input           string
 		expectedMessage string
 	}{
+		{`"hello" - "world"`,
+			"unknown operator: STRING - STRING",
+		},
 		{"foobar",
 			"identifier not found: foobar",
 		},
@@ -283,7 +314,7 @@ func TestEvalIntegerExpression(t *testing.T) {
 func testEval(input string) object.Object {
 	l := lexer.New(input)
 	p := parser.New(l)
-    e := object.NewEnvironment()
+	e := object.NewEnvironment()
 
 	program := p.ParseProgram()
 

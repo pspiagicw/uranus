@@ -44,6 +44,12 @@ let newAdder = fn(x) {
 let addTwo = newAdder(2);
 ```
 
+### Strings
+
+```
+
+```
+
 ## Language Features
 
 Currently the language supports
@@ -52,6 +58,8 @@ Currently the language supports
 - Booleans
 - Integers
 - Functions (Including higher-order function and closures.)
+- Strings
+- Assignment statements
 - Return Statements
 
 ## Interpreter Features
