@@ -8,6 +8,43 @@ import (
 	"github.com/pspiagicw/uranus/pkg/lexer"
 )
 
+func TestIndexExpressions(t *testing.T) {
+	input := `myArray[1 + 1]`
+
+	program := newProgram(t, input)
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	indexExp, ok := stmt.Expression.(*ast.IndexExpression)
+	if !ok {
+		t.Fatalf("exp not *ast.IndexExpression, got=%T", stmt.Expression)
+	}
+
+	assertIdentifier(t, indexExp.Left, "myArray")
+	assertInfixExpression(t, indexExp.Index, 1, "+", 1)
+
+}
+
+func TestArrayLiteral(t *testing.T) {
+	input := `[1, 2 * 2, 3 + 3]`
+
+	program := newProgram(t, input)
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	array, ok := stmt.Expression.(*ast.ArrayLiteral)
+	if !ok {
+		t.Fatalf("exp not ast.ArrayLiteral got=%T", stmt.Expression)
+	}
+
+	if len(array.Elements) != 3 {
+		t.Fatalf("length of Array.Elements not 3, got=%d", len(array.Elements))
+
+	}
+
+	assertIntegerLiteral(t, array.Elements[0], 1)
+	assertInfixExpression(t, array.Elements[1], 2, "*", 2)
+	assertInfixExpression(t, array.Elements[2], 3, "+", 3)
+
+}
 func TestStringLitearlExpressions(t *testing.T) {
 	input := `"hello world"`
 	program := newProgram(t, input)
@@ -344,6 +381,14 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 		{
 			"add(a + b + c * d / f + g)",
 			"add((((a + b) + ((c * d) / f)) + g))",
+		},
+		{
+			"a * [1, 2, 3, 4][b * c] * d",
+			"((a * ([1, 2, 3, 4][(b * c)])) * d)",
+		},
+		{
+			"add(a * b[2], b[1], 2 * [1, 2][1])",
+			"add((a * (b[2])), (b[1]), (2 * ([1, 2][1])))",
 		},
 	}
 
