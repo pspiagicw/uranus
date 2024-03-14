@@ -325,12 +325,11 @@ func (i *IndexExpression) String() string {
 	out.WriteString(i.Index.String())
 	out.WriteString("])")
 
-    return out.String()
+	return out.String()
 }
 
 type HashLiteral struct {
-    Token token.Token
+	Token token.Token
 
-    Pairs map[Expression]Expression
+	Pairs map[Expression]Expression
 }
-

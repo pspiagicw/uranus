@@ -93,12 +93,12 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.GT, l.ch)
 	case '/':
 		tok = newToken(token.DIVIDE, l.ch)
-    case '[':
-        tok = newToken(token.LSQUARE, l.ch)
-    case ']':
-        tok = newToken(token.RSQUARE, l.ch)
-    case ':':
-        tok = newToken(token.COLON, l.ch)
+	case '[':
+		tok = newToken(token.LSQUARE, l.ch)
+	case ']':
+		tok = newToken(token.RSQUARE, l.ch)
+	case ':':
+		tok = newToken(token.COLON, l.ch)
 	case 0:
 		tok.Type = token.EOF
 		tok.Literal = ""

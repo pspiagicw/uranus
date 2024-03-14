@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewToken(t *testing.T) {
-    input := `=+(){},;[]:`
+	input := `=+(){},;[]:`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -21,9 +21,9 @@ func TestNewToken(t *testing.T) {
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
 		{token.SEMICOLON, ";"},
-        {token.LSQUARE, "["},
-        {token.RSQUARE, "]"},
-        {token.COLON, ":"},
+		{token.LSQUARE, "["},
+		{token.RSQUARE, "]"},
+		{token.COLON, ":"},
 		{token.EOF, ""},
 	}
 
@@ -152,12 +152,12 @@ return false;
 		{token.SEMICOLON, ";"},
 		{token.STRING, "foobar"},
 		{token.STRING, "foo bar"},
-        {token.LSQUARE, "["},
+		{token.LSQUARE, "["},
 		{token.INT, "1"},
-        {token.COMMA, ","},
+		{token.COMMA, ","},
 		{token.INT, "2"},
-        {token.RSQUARE, "]"},
-        {token.COLON, ":"},
+		{token.RSQUARE, "]"},
+		{token.COLON, ":"},
 		{token.EOF, ""},
 	}
 

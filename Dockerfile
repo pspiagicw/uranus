@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:latest as builder
 
 WORKDIR /usr/src/app
 
@@ -8,6 +8,12 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-RUN go build -v -o /usr/local/bin ./...
+RUN CGO_ENABLED=0 go build -o uranus cmd/uranus/main.go
 
-CMD ["uranus"]
+FROM scratch
+
+ENV USER=uranus
+
+COPY --from=builder /usr/src/app/uranus /
+
+CMD ["/uranus"]
