@@ -8,7 +8,7 @@ import (
 	"github.com/pspiagicw/uranus/pkg/compiler"
 	"github.com/pspiagicw/uranus/pkg/lexer"
 	"github.com/pspiagicw/uranus/pkg/parser"
-	"github.com/pspiagicw/uranus/vm"
+	"github.com/pspiagicw/uranus/pkg/vm"
 )
 
 const PROMPT = ">>> "
@@ -57,7 +57,7 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		stackTop := machine.StackTop()
+		stackTop := machine.LastPoppedStackElem()
 		io.WriteString(out, stackTop.Inspect())
 		io.WriteString(out, "\n")
 	}
